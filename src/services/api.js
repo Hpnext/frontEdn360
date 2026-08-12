@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: 'https://projeto360-production.up.railway.app',
 });
 
 // Interceptor de Requisição (Envia o token)
