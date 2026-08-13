@@ -184,6 +184,20 @@ function Login() {
           Entrar
         </button>
       </form>
+
+      {/* ASSINATURA NO RODAPÉ */}
+      <div style={{
+        position: 'absolute',
+        bottom: '24px',
+        color: 'rgba(159, 184, 217, 0.7)',
+        fontSize: '11px',
+        letterSpacing: '1.2px',
+        textAlign: 'center',
+        textTransform: 'uppercase'
+      }}>
+        Criado pelos AL OF PM MEDRADO e AL OF PM JONNATHAN
+      </div>
+      
     </div>
   );
 }
