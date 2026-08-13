@@ -13,34 +13,25 @@ api.interceptors.request.use(async (config) => {
   return config;
 });
 
-// Interceptor de Resposta (Lida com os erros sem redirecionar à força)
+// Interceptor de Resposta (Silencia os alerts e apenas lida com os dados ou logs)
 api.interceptors.response.use(
   (response) => {
-    return response; // Se a requisição deu certo, continua normalmente
+    return response;
   },
   (error) => {
     if (error.response) {
       const status = error.response.status;
 
-      // 403: Acesso Negado (O usuário está logado, mas tentou fazer algo que não tem permissão)
-      if (status === 403) {
-        alert("Acesso Negado: Você não tem permissão para realizar esta ação.");
-        // Não fazemos window.location.href aqui, a tela fica intacta!
-      } 
-      // 401: Token inválido ou expirado
-      else if (status === 401) {
-        alert("Sua sessão expirou. Você precisa fazer login novamente.");
+      // 401: Token inválido ou expirado (Apenas limpa o token e redireciona, sem alert)
+      if (status === 401) {
         localStorage.removeItem('auth_token');
-        // Apenas o 401 redireciona, pois o sistema não funciona sem um token válido
         window.location.href = '/login'; 
-      } 
-      // Outros erros (400, 500, etc)
-      else {
-        const mensagemErro = error.response.data?.message || "Ocorreu um erro ao processar a solicitação.";
-        alert(`Erro: ${mensagemErro}`);
       }
+      
+      // Para 403, 500 ou outros erros, apenas registramos no console de forma limpa
+      console.error("Erro na API:", error.response.status, error.response.data);
     } else {
-      alert("Erro de conexão com o servidor. Verifique se o backend está rodando.");
+      console.error("Erro de conexão com o servidor:", error.message);
     }
 
     return Promise.reject(error);
