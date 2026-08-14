@@ -63,7 +63,8 @@ function App() {
        <Route 
   path="/avaliacoes-usuario/:id" 
   element={
-    <RotaProtegida>
+       <RotaProtegida papeisPermitidos={['ADMIN', 'GESTOR']}>
+
       <AvaliacoesUsuario />
     </RotaProtegida>
   } 
