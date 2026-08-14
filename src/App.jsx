@@ -28,11 +28,46 @@ function App() {
           } 
         />
         
-        <Route path="/usuarios" element={<ListaUsuarios />} />
-        <Route path="/minhas-atribuicoes" element={<MinhasAtribuicoes />} />
-        <Route path="/responder-atribuicao/:id" element={<ResponderAtribuicao />} />
-        <Route path="/visualizar-avaliacao/:id" element={<VisualizarAvaliacao />} />
-        <Route path="/avaliacoes-usuario/:id" element={<AvaliacoesUsuario />} />
+        <Route 
+  path="/usuarios" 
+  element={
+    <RotaProtegida>
+      <ListaUsuarios />
+    </RotaProtegida>
+  } 
+/>
+        <Route 
+  path="/minhas-atribuicoes" 
+  element={
+    <RotaProtegida>
+      <MinhasAtribuicoes />
+    </RotaProtegida>
+  } 
+/>
+<Route 
+  path="/responder-atribuicao/:id" 
+  element={
+    <RotaProtegida>
+      <ResponderAtribuicao />
+    </RotaProtegida>
+  } 
+/>
+<Route 
+  path="/visualizar-avaliacao/:id" 
+  element={
+   <RotaProtegida papeisPermitidos={['ADMIN', 'GESTOR']}>
+      <VisualizarAvaliacao />
+    </RotaProtegida>
+  } 
+/>
+       <Route 
+  path="/avaliacoes-usuario/:id" 
+  element={
+    <RotaProtegida>
+      <AvaliacoesUsuario />
+    </RotaProtegida>
+  } 
+/>
         
         <Route 
           path="/primeiro-acesso" 
@@ -43,7 +78,17 @@ function App() {
           } 
         />
         
-        <Route path="/acompanhar-ciclo" element={<AcompanharCiclo />} />
+<Route 
+  path="/acompanhar-ciclo" 
+  element={
+    <RotaProtegida papeisPermitidos={['ADMIN', 'GESTOR']}>
+      <AcompanharCiclo />
+    </RotaProtegida>
+  } 
+/>
+
+
+
         <Route path="/recuperar-senha" element={<RecuperarSenha />} />
         
         {/* A rota do ranking verifica o token e os papéis específicos */}
