@@ -86,6 +86,9 @@ export default function Painel() {
         setUsuario(dadosUsuario);
         const papelDoUsuario = dadosUsuario.papel || dadosUsuario.role;
 
+        // ALTERAÇÃO AQUI: Salva o papel no localStorage
+        localStorage.setItem('papel_usuario', papelDoUsuario);
+
         if (papelDoUsuario === 'ADMIN' || papelDoUsuario === 'GESTOR') {
           api.get('/turmas').then(res => setTurmas(res.data)).catch(console.error);
           api.get('/atributos/todos').then(res => setAtributos(res.data)).catch(console.error);
@@ -120,6 +123,8 @@ export default function Painel() {
 
   const handleLogout = () => {
     localStorage.removeItem('auth_token');
+    // ALTERAÇÃO AQUI: Limpa o papel ao sair do sistema
+    localStorage.removeItem('papel_usuario');
     navigate('/login');
   };
 
